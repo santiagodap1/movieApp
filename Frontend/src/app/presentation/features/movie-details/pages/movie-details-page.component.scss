@@ -1,0 +1,89 @@
+.page-container {
+  position: relative;
+}
+
+.details {
+  color: #fff;
+  position: relative;
+  padding-bottom: 2rem;
+  overflow: hidden;
+
+  .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4);
+    z-index: -1;
+  }
+
+  .details-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 200px;
+    padding: 0 2rem;
+
+    .poster {
+      width: 250px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .info {
+      max-width: 600px;
+      text-align: left;
+
+      h2 {
+        margin: 0;
+        font-size: 2rem;
+        color: #ffcc00;
+      }
+
+      .release,
+      .rating {
+        color: #ccc;
+        font-size: 1rem;
+        margin-top: 0.3rem;
+      }
+
+      .genres {
+        margin-top: 1rem;
+        span {
+          display: inline-block;
+          background-color: #333;
+          border-radius: 20px;
+          padding: 0.3rem 0.8rem;
+          margin-right: 0.5rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      .overview {
+        margin-top: 1rem;
+        line-height: 1.4;
+        color: #ddd;
+      }
+    }
+  }
+}
+
+.loading {
+  color: #ccc;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+app-comments {
+  display: block;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}

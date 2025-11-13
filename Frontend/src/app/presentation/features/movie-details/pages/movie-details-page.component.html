@@ -1,0 +1,34 @@
+<div class="page-container">
+  <div class="details" *ngIf="!loading && movie">
+    <div
+      class="backdrop"
+      [ngStyle]="{
+        'background-image': 'url(' + movie.backdropUrl + ')'
+      }"
+    ></div>
+
+    <div class="details-container">
+      <img
+        [src]="movie.posterUrl || 'assets/images/no-image.jpeg'"
+        [alt]="movie.title"
+        class="poster"
+      />
+
+      <div class="info">
+        <h2>{{ movie.title }}</h2>
+        <p class="release">📅 {{ movie.releaseDate | date }}</p>
+        <p class="rating">⭐ {{ movie.rating | number: '1.1-1' }}</p>
+
+        <div class="genres" *ngIf="movie.genres?.length">
+          <span *ngFor="let genre of movie.genres">{{ genre }}</span>
+        </div>
+
+        <p class="overview">{{ movie.overview }}</p>
+      </div>
+    </div>
+  </div>
+
+  <app-comments *ngIf="movie" [movieId]="movie.id"></app-comments>
+</div>
+
+<div *ngIf="loading" class="loading">loading...</div>

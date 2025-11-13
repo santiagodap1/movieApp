@@ -1,0 +1,212 @@
+<div class="admin">
+  <header class="admin__header">
+    <h1>Backoffice</h1>
+    <p>Manage users, favorites and comments from one place.</p>
+    <nav class="admin__tabs">
+      <button
+        type="button"
+        [class.active]="activeSection === 'users'"
+        (click)="setActiveSection('users')"
+      >
+        Users
+      </button>
+      <button
+        type="button"
+        [class.active]="activeSection === 'favorites'"
+        (click)="setActiveSection('favorites')"
+      >
+        Favorites
+      </button>
+      <button
+        type="button"
+        [class.active]="activeSection === 'comments'"
+        (click)="setActiveSection('comments')"
+      >
+        Comments
+      </button>
+    </nav>
+  </header>
+
+  <div class="feedback" *ngIf="feedbackMessage">{{ feedbackMessage }}</div>
+
+  <section *ngIf="activeSection === 'users'">
+    <div class="panel">
+      <h2>Users</h2>
+      <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" class="admin-form">
+        <div class="grid">
+          <label>
+            Name
+            <input formControlName="name" type="text" />
+          </label>
+          <label>
+            Email
+            <input formControlName="email" type="email" />
+          </label>
+          <label>
+            Password
+            <input formControlName="password" type="password" placeholder="Leave blank to keep" />
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" formControlName="isAdmin" />
+            Admin?
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit">
+            {{ userForm.value.id ? 'Update user' : 'Create user' }}
+          </button>
+          <button type="button" class="ghost" (click)="resetUserForm()">Clear</button>
+        </div>
+      </form>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Created</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loadingUsers">
+              <td colspan="5">Loading users...</td>
+            </tr>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.isAdmin ? 'Admin' : 'User' }}</td>
+              <td>{{ user.createdAt | date: 'short' }}</td>
+              <td class="table-actions">
+                <button type="button" (click)="editUser(user)">Edit</button>
+                <button type="button" class="danger" (click)="deleteUser(user.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="activeSection === 'favorites'">
+    <div class="panel">
+      <h2>Favorites</h2>
+      <form [formGroup]="favoriteForm" (ngSubmit)="submitFavoriteForm()" class="admin-form">
+        <div class="grid">
+          <label>
+            User ID
+            <input formControlName="userId" type="number" />
+          </label>
+          <label>
+            Movie ID
+            <input formControlName="movieId" type="number" />
+          </label>
+          <label>
+            Movie title
+            <input formControlName="movieTitle" type="text" />
+          </label>
+          <label>
+            Poster URL
+            <input formControlName="posterUrl" type="text" />
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit">
+            {{ favoriteForm.value.id ? 'Update favorite' : 'Create favorite' }}
+          </button>
+          <button type="button" class="ghost" (click)="resetFavoriteForm()">Clear</button>
+        </div>
+      </form>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Movie</th>
+              <th>Poster</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loadingFavorites">
+              <td colspan="4">Loading favorites...</td>
+            </tr>
+            <tr *ngFor="let fav of favorites">
+              <td>{{ fav.userId }}</td>
+              <td>
+                {{ fav.movieTitle }} ({{ fav.movieId }})
+              </td>
+              <td>
+                <img *ngIf="fav.posterUrl" [src]="fav.posterUrl" alt="{{ fav.movieTitle }}" />
+              </td>
+              <td class="table-actions">
+                <button type="button" (click)="editFavorite(fav)">Edit</button>
+                <button type="button" class="danger" (click)="deleteFavorite(fav.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="activeSection === 'comments'">
+    <div class="panel">
+      <h2>Comments</h2>
+      <form [formGroup]="commentForm" (ngSubmit)="submitCommentForm()" class="admin-form">
+        <div class="grid">
+          <label>
+            User ID
+            <input formControlName="userId" type="number" />
+          </label>
+          <label>
+            Movie ID
+            <input formControlName="movieId" type="number" />
+          </label>
+          <label>
+            Content
+            <textarea formControlName="content" rows="3"></textarea>
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit">
+            {{ commentForm.value.id ? 'Update comment' : 'Create comment' }}
+          </button>
+          <button type="button" class="ghost" (click)="resetCommentForm()">Clear</button>
+        </div>
+      </form>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Movie</th>
+              <th>Content</th>
+              <th>Created</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loadingComments">
+              <td colspan="5">Loading comments...</td>
+            </tr>
+            <tr *ngFor="let comment of comments">
+              <td>{{ comment.userId }}</td>
+              <td>{{ comment.movieId }}</td>
+              <td>{{ comment.content }}</td>
+              <td>{{ comment.createdAt | date: 'short' }}</td>
+              <td class="table-actions">
+                <button type="button" (click)="editComment(comment)">Edit</button>
+                <button type="button" class="danger" (click)="deleteComment(comment.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

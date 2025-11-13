@@ -1,0 +1,37 @@
+<nav class="navbar">
+  <div class="navbar__logo" (click)="goHome()">
+    🎬 <span class="title">MovieApp</span>
+  </div>
+
+  <div class="navbar__search">
+    <input
+      type="text"
+      placeholder="Search movies..."
+      [(ngModel)]="query"
+      (keyup.enter)="onSearch()"
+    />
+    <button (click)="onSearch()">🔍</button>
+  </div>
+
+  <div class="navbar__actions">
+    <button class="login-btn" (click)="goFavorites()">⭐ Favorites</button>
+    <button *ngIf="isAdmin" class="login-btn" (click)="goAdmin()">🛠 Admin</button>
+
+
+    <button
+      *ngIf="!isLoggedIn"
+      class="login-btn"
+      (click)="goLogin()"
+    >
+      Login
+    </button>
+
+    <button
+      *ngIf="isLoggedIn"
+      class="login-btn"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+</nav>

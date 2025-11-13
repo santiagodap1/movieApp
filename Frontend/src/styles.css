@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+body.movie-themed-bg {
+  position: relative;
+  min-height: 100vh;
+}
+
+body.movie-themed-bg::before,
+body.movie-themed-bg::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body.movie-themed-bg::before {
+  background-image: var(--movie-bg-image);
+  background-size: cover;
+  background-position: center;
+  filter: blur(30px) brightness(1.5);
+  transform: scale(1.05);
+}
+
+body.movie-themed-bg::after {
+  z-index: -1;
+  background: radial-gradient(circle at top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.85));
+}

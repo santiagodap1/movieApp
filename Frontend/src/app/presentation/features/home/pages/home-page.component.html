@@ -1,0 +1,66 @@
+<div class="home">
+  <section class="top-rated">
+    <div class="top-rated__header">
+      <h2 class="title">Top rated picks</h2>
+      <div class="carousel-controls" *ngIf="topRatedMovies.length > 0">
+        <button type="button" (click)="scrollTopRated('prev')" aria-label="Previous">
+          ‹
+        </button>
+        <button type="button" (click)="scrollTopRated('next')" aria-label="Next">
+          ›
+        </button>
+      </div>
+    </div>
+
+    <div class="top-rated__carousel" *ngIf="topRatedMovies.length > 0; else topRatedStatus">
+      <div class="top-rated__track" #topRatedCarousel (scroll)="onTopRatedScroll()">
+        <article
+          *ngFor="let movie of topRatedMovies"
+          class="top-rated__slide"
+          [style.backgroundImage]="movie.backdropUrl ? 'url(' + movie.backdropUrl + ')' : 'none'"
+          (click)="goToMovie(movie.id)"
+        >
+          <div class="top-rated__overlay">
+            <p class="top-rated__label">Top rated</p>
+            <h3>{{ movie.title }}</h3>
+            <p class="top-rated__overview">
+              {{ movie.overview || 'No summary available.' }}
+            </p>
+            <div class="top-rated__meta">
+              <span *ngIf="movie.releaseDate">Released {{ movie.releaseDate | date }}</span>
+              <span *ngIf="movie.rating">Rating {{ movie.rating | number: '1.1-1' }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <ng-template #topRatedStatus>
+      <div class="loading" *ngIf="topRatedLoading">Loading top rated...</div>
+      <p class="empty" *ngIf="!topRatedLoading">Top rated movies are unavailable right now.</p>
+    </ng-template>
+  </section>
+
+  <section class="genres-section">
+    <h2 class="title">Explore by genre</h2>
+
+    <div class="genres">
+      <button
+        *ngFor="let genre of genres"
+        [class.active]="genre.id === selectedGenreId"
+        (click)="selectGenre(genre.id)"
+      >
+        {{ genre.name }}
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">loading...</div>
+
+    <div class="movies-grid" *ngIf="!loading && movies.length > 0">
+      <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+    </div>
+
+    <p *ngIf="!loading && movies.length === 0 && selectedGenreId" class="empty">
+      No movies found for this genre.
+    </p>
+  </section>
+</div>

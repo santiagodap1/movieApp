@@ -1,0 +1,13 @@
+<div class="search">
+  <h2 *ngIf="query">Results for "{{ query }}"</h2>
+
+  <div *ngIf="loading" class="loading">A procurar filmes...</div>
+
+  <div *ngIf="!loading && movies.length > 0" class="movies-grid">
+    <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+  </div>
+
+  <p *ngIf="!loading && movies.length === 0 && query" class="empty">
+    No results.
+  </p>
+</div>

@@ -1,0 +1,11 @@
+<div class="favorites-page">
+  <h2>⭐ My favorites</h2>
+
+  <div *ngIf="favoriteMovies.length > 0; else noFavorites" class="movies-grid">
+    <app-movie-card *ngFor="let movie of favoriteMovies" [movie]="movie"></app-movie-card>
+  </div>
+
+  <ng-template #noFavorites>
+    <p class="empty-message">You don't have any favorite movies yet. Add some! ❤️</p>
+  </ng-template>
+</div>

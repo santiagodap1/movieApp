@@ -1,0 +1,56 @@
+.movie-card {
+  width: 180px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  position: relative;
+  text-align: center;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .movie-poster {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .movie-info {
+    margin-top: 0.5rem;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .release,
+    .rating {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+  }
+}

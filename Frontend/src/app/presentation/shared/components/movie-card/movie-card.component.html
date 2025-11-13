@@ -1,0 +1,20 @@
+<div class="movie-card" (click)="goToDetails()">
+  <button class="favorite-btn" (click)="toggleFavorite(); $event.stopPropagation()">
+    {{ isFav ? '❤️' : '♡' }}
+  </button>
+  <img
+    [src]="movie.posterUrl || 'assets/images/no-image.jpeg'"
+    [alt]="movie.title"
+    class="movie-poster"
+  />
+
+  <div class="movie-info">
+    <h3>{{ movie.title }}</h3>
+    <p class="release" *ngIf="movie.releaseDate">
+      {{ movie.releaseDate | date }}
+    </p>
+    <p class="rating" *ngIf="movie.rating && movie.rating > 0">
+      ⭐ {{ movie.rating | number : '1.1-1' }}
+    </p>
+  </div>
+</div>
